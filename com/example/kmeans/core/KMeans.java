@@ -1,7 +1,7 @@
 package com.example.kmeans.core;
-import com.example.kmeans.entity.Cluster;
-import com.example.kmeans.entity.Point;
-import com.example.kmeans.metric.DistanceMetric;
+import com.example.kmeans.entity.Clusterocp;
+import com.example.kmeans.entity.Pointocp;
+import com.example.kmeans.metric.Metric;
 import java.util.ArrayList;
 import java.util.List;
 /**
@@ -10,8 +10,8 @@ import java.util.List;
 public class KMeans {
     private final int k;
     private final int maxIterations;
-    private final DistanceMetric distanceMetric; 
-    public KMeans(int k, int maxIterations, DistanceMetric distanceMetric) {
+    private final Metric distanceMetric; 
+    public KMeans(int k, int maxIterations, Metric distanceMetric) {
         if(distanceMetric == null) {
             throw new IllegalArgumentException("距离度量策略不能为 null !");
         }
@@ -19,26 +19,26 @@ public class KMeans {
         this.maxIterations = maxIterations;
         this.distanceMetric = distanceMetric;
     }
-    public List<Cluster> fit(List<Point> points){
+    public List<Clusterocp> fit(List<Pointocp> points){
         if(points == null || points.size() < k){
             throw new IllegalArgumentException("数据点数量必须大于等于 K !");
         }
-        List<Cluster> clusters = new ArrayList<>();
+        List<Clusterocp> clusters = new ArrayList<>();
         for(int i = 0; i < k; i++){
-            clusters.add(new Cluster(i, points.get(i)));
+            clusters.add(new Clusterocp(i, points.get(i)));
         }
         boolean changed = true;
         int iter = 0;
         while (changed && iter < maxIterations){
-            for(Cluster c : clusters){
+            for(Clusterocp c : clusters){
                 c.clearPoints();
             }
-            for(Point p : points){
-                Cluster nearest = findNearestCluster(p, clusters);
+            for(Pointocp p : points){
+                Clusterocp nearest = findNearestCluster(p, clusters);
                 nearest.addPoint(p);
             }
             changed = false;
-            for(Cluster c : clusters){
+            for(Clusterocp c : clusters){
                 if(c.updateCentroid()){
                     changed = true;
                 }
@@ -47,11 +47,11 @@ public class KMeans {
         }
         return clusters;
     }
-    private Cluster findNearestCluster(Point p, List<Cluster> clusters){
-        Cluster nearest = clusters.get(0);
+    private Clusterocp findNearestCluster(Pointocp p, List<Clusterocp> clusters){
+        Clusterocp nearest = clusters.get(0);
         double minDist = distanceMetric.calculate(p, nearest.getCentroid());
         for(int i = 1; i < clusters.size(); i++){
-            Cluster c = clusters.get(i);
+            Clusterocp c = clusters.get(i);
             double dist = distanceMetric.calculate(p, c.getCentroid());
             if(dist < minDist){
                 minDist = dist;
