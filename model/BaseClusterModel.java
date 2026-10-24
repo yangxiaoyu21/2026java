@@ -1,6 +1,10 @@
 package model;
 import java.util.List;
 import java.util.ArrayList;
+/**
+ * @杨晓语
+ * BaseClusterModel
+ */
 public abstract class BaseClusterModel {
     protected int k;
     protected int maxIterations;
