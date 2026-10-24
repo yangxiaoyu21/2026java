@@ -1,6 +1,10 @@
 package model;
 import java.util.ArrayList;
 import java.util.List;
+/**
+ * @杨晓语
+ * HierarchicalModel
+ */
 public class HierarchicalModel extends BaseClusterModel {
     public HierarchicalModel(int k,int maxIterations){
         super(k,maxIterations);

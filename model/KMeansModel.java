@@ -1,4 +1,8 @@
 package model;
+/**
+ * @杨晓语
+ * KMeansModel
+ */
 public class KMeansModel extends BaseClusterModel{
     public KMeansModel(int k,int maxIterations){
         super(k,maxIterations);
