@@ -1,4 +1,8 @@
 package task2;
+/**
+ * @杨晓语
+ * Student
+ */
 public class Student implements Comparable<Student> {
     private String name;
     private int id;
